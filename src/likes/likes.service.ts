@@ -1,6 +1,10 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { REQUEST } from '@nestjs/core';
+import { Request } from 'express';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { PostDocument } from 'src/posts/models/post.model';
+import { UserDocument } from 'src/users/models/user.model';
 import { CreateLikeDto } from './dto/create-like.dto';
 import { UpdateLikeDto } from './dto/update-like.dto';
 import { LikeDocument } from './models/like.model';
@@ -8,20 +12,27 @@ import { LikeDocument } from './models/like.model';
 @Injectable()
 export class LikesService {
   constructor(
+    @Inject(REQUEST) private req: Request,
     @InjectModel('like') private readonly likeModel: Model<LikeDocument>,
+    @InjectModel('post') private readonly postModel: Model<PostDocument>,
+    @InjectModel('user') private readonly userModel: Model<UserDocument>,
   ){}
 
   createLike(createLikeDto: CreateLikeDto) {
-    const{post_id,user_id} = createLikeDto;
-    const d = 1;
+    const { id } = this.req.user as UserDocument;
 
-    const like = new this.likeModel(createLikeDto)
-     like.user_id = user_id;
-     like.post_id = post_id;
+    const{post_id} = createLikeDto;
+  
+
+    const like = new this.likeModel({
+      user_id: id,
+      post_id
+    })
+     
 
      like.save()
 
-    return 'This action adds a new like';
+    return 'Like added';
   }
 
   // findAll() {

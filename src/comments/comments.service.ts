@@ -20,9 +20,17 @@ export class CommentsService {
     @InjectModel('user') private readonly userModel: Model<UserDocument>,
   ){}
   async create(createCommentDto: CreateCommentDto) {
-    console.log(this.req.user)
-    const {post_id, user_id, comment} = createCommentDto;
-    const newComment = new this.commentModel(createCommentDto);
+    
+    const { id } = this.req.user as UserDocument;
+    
+    const {post_id, comment} = createCommentDto;
+
+
+    const newComment = new this.commentModel({
+      user_id: id,
+      post_id, 
+      comment,
+    });
     const res = await newComment.save();
 
     return 'Comment Added!';
