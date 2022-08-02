@@ -15,9 +15,10 @@ export class UsersService {
     @InjectModel('user') private readonly userModel: Model<UserDocument>
   ){}
 
-  // async findUser() {
-  //   this.userModel.findOne({email})
-  // }
+  async findById(id: any) {
+    const user = this.userModel.findOne({id})
+    return user
+  }
  
   //register a user
   // async findUser(email: string) {
@@ -39,7 +40,8 @@ export class UsersService {
         newUser.email = email;
         newUser.password = await bcrypt.hash(createUserDto.password, saltRounds);
         newUser.role = userRole.reader
-        await newUser.save();        
+        await newUser.save(); 
+               
   }
       } catch(err){
         return err
@@ -64,6 +66,11 @@ export class UsersService {
     async findByPayload(payload: Payload) {
       const { email } = payload;
       return await this.userModel.findOne({ email });
+    }
+    
+    
+    async getUsers() {
+      return await this.userModel.find({})
     }
     
  

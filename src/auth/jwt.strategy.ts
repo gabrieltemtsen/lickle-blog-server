@@ -5,13 +5,14 @@ import { Strategy } from 'passport-jwt';
 
 
 import { AuthService } from './auth.service';
+import { jwtConstants } from './constants';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
   constructor(private authService: AuthService) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: "somethingsecret",
+      secretOrKey: jwtConstants.secret,
     });
   }
 

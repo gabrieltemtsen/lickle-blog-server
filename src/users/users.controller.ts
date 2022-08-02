@@ -5,7 +5,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { LoginUserDto } from '../auth/login-user.dto';
 import { AuthService } from 'src/auth/auth.service';
 
-@Controller('auth')
+@Controller()
 export class UsersController {
     constructor(
         private usersService: UsersService,
@@ -17,32 +17,29 @@ export class UsersController {
   async registerUser(@Body() createUserDto: CreateUserDto) {
   
     const user = await this.usersService.registerUser(createUserDto);
-    const payload = {
-      email: user.email,
-    };
-    const token = await this.authService.signPayload(payload);
-    return { user, token };
+    return "Successfully Registered!"
+    
   }
-  @Post('login')
-  async loginUser(@Body() loginUserdto: LoginUserDto){
-    const user = await this.usersService.loginUser(loginUserdto)
-    //  this.userService.findByLogin(UserDTO);
-      const payload = {
-        email: user.email,
-      };
-      const token = await this.authService.signPayload(payload);
-      return { user, token};
-  }
-
-  // @Get()
-  // findAll() {
-  //   return this.usersService.findAll();
+  // @Post('login')
+  // async loginUser(@Body() loginUserdto: LoginUserDto){
+  //   const user = await this.usersService.loginUser(loginUserdto)
+  //   //  this.userService.findByLogin(UserDTO);
+  //     const payload = {
+  //       email: user.email,
+  //     };
+  //     const token = await this.authService.signPayload(payload);
+  //     return { user, token};
   // }
 
-  // @Get(':id')
-  // findOne(@Param('id') id: string) {
-  //   return this.usersService.findOne(+id);
-  // }
+  @Get()
+  findAll() {
+    return this.usersService.getUsers();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.usersService.findById(id);
+  }
 
   // @Patch(':id')
   // update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {

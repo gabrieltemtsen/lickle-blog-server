@@ -9,26 +9,26 @@ export class LikesController {
 
   @Post()
   create(@Body() createLikeDto: CreateLikeDto) {
-    return this.likesService.create(createLikeDto);
+    return this.likesService.createLike(createLikeDto);
   }
 
-  @Get()
-  findAll() {
-    return this.likesService.findAll();
-  }
+  // @Get()
+  // findAll() {
+  //   return this.likesService.findAll();
+  // }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.likesService.findOne(+id);
-  }
+  // @Get(':id')
+  // findOne(@Param('id') id: string) {
+  //   return this.likesService.findOne(+id);
+  // }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateLikeDto: UpdateLikeDto) {
-    return this.likesService.update(+id, updateLikeDto);
-  }
+  // @Patch(':id')
+  // update(@Param('id') id: string, @Body() updateLikeDto: UpdateLikeDto) {
+  //   return this.likesService.update(+id, updateLikeDto);
+  // }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.likesService.remove(+id);
-  }
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.likesService.remove(+id);
+  // }
 }

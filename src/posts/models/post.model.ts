@@ -1,30 +1,34 @@
-import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import {Document} from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import mongoose, { Document } from 'mongoose';
+import { Like } from 'src/likes/models/like.model';
 
-export type PostDocument = Post & Document
+export type PostDocument = Post & Document;
 
 @Schema()
-export class Post{
-    @Prop()
-    title: string ;
+export class Post {
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
+  user_id: string;
 
-    @Prop()
-    description: string ;
+  @Prop()
+  title: string;
 
-    @Prop()
-    image: string;
+  @Prop()
+  description: string;
 
-    @Prop()
-    body: string;
+  @Prop()
+  image: string;
 
-    @Prop()
-    comments: string;
+  @Prop()
+  body: string;
 
-    @Prop()
-    likes: number;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' })
+  comments: Comment[];
 
-    @Prop({default: Date.now})
-    date: Date;
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Like' })
+  likes: Like[];
+
+  @Prop({ default: Date.now })
+  date: Date;
 }
 
-export const PostSchema = SchemaFactory.createForClass(Post)
+export const PostSchema = SchemaFactory.createForClass(Post);

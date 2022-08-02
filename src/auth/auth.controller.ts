@@ -20,6 +20,9 @@ export class AuthController {
   async hiddenInformation(){
     return  "hidden information";
   }
+
+
+  
   
 @Get("/anyone")
 
@@ -27,15 +30,7 @@ async publicInformation(){
 return  "this can be seen by anyone";
 }
 
-    // @Post('register')
-    // async register(@Body() createUserDto: CreateUserDto) {
-    //   const user = await this.usersService.registerUser(createUserDto);
-    //   const payload = {
-    //     email: user.email,
-    //   };
-    //   const token = await this.authService.signPayload(payload);
-    //   return { user, token};
-    // }
+
     @Post('login')
     async login(@Body() loginDTO: LoginUserDto) {
       const user = await this.usersService.loginUser(loginDTO);
