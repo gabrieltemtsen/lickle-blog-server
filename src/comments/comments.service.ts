@@ -40,15 +40,19 @@ export class CommentsService {
     return `This action returns all comments`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} comment`;
+  async getComments(id: string) {
+    return await this.commentModel.find({
+      post_id: id,
+    });
   }
 
-  update(id: number, updateCommentDto: UpdateCommentDto) {
-    return `This action updates a #${id} comment`;
+  editComment(id: string, updateCommentDto: UpdateCommentDto) {
+    const {comment} = updateCommentDto;
+    return this.commentModel.findByIdAndUpdate(id, updateCommentDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} comment`;
+  deleteComment(id: string) {
+    return this.commentModel.findByIdAndDelete(id);
+    
   }
 }
