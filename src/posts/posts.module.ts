@@ -5,7 +5,6 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { PostSchema } from './models/post.model';
 import { UsersModule } from 'src/users/users.module';
 import { UserSchema } from 'src/users/models/user.model';
-import { CloudinaryModule } from 'src/cloudinary/cloudinary.module';
 
 @Module({
   imports:[
@@ -14,7 +13,6 @@ import { CloudinaryModule } from 'src/cloudinary/cloudinary.module';
       {name: 'user', schema:UserSchema}
     ]),
     UsersModule,
-    CloudinaryModule,
 
   ],
   controllers: [PostsController],

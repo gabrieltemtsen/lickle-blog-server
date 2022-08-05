@@ -8,7 +8,6 @@ import { UsersService } from 'src/users/users.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { PostDocument } from './models/post.model';
-import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
 
 
 @Injectable()
@@ -17,7 +16,6 @@ export class PostsService {
     @Inject(REQUEST) private req: Request,
     @InjectModel('post') private readonly postModel: Model<PostDocument>,
     @InjectModel('user') private readonly userModel: Model<UserDocument>,
-    private cloudinary: CloudinaryService,
     private usersService: UsersService
   ){}
 
@@ -34,11 +32,7 @@ export class PostsService {
     return await this.usersService.findById(id)
   }
 
-  async uploadImageToCloudinary(file: Express.Multer.File) {
-    return await this.cloudinary.uploadImage(file).catch(() => {
-      throw new BadRequestException('Invalid file type.');
-    });
-  }
+  
 
   async createPost(createPostDto: CreatePostDto) {
     const { id } = this.req.user as UserDocument;
