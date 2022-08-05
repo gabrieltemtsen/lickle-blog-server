@@ -1,10 +1,8 @@
 export class CreatePostDto {
+  user_id: string;
   title: string;
   description: string;
-  image: string;
+  image_url: string;
+  cloudinary_id
   body: string;
-  comments: [];
-  likes: [];
-  user_id: string;
-
 }

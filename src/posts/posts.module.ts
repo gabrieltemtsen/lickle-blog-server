@@ -13,6 +13,7 @@ import { UserSchema } from 'src/users/models/user.model';
       {name: 'user', schema:UserSchema}
     ]),
     UsersModule,
+    
 
   ],
   controllers: [PostsController],

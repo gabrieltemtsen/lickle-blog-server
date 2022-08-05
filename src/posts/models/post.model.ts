@@ -16,7 +16,10 @@ export class Post {
   description: string;
 
   @Prop()
-  image: string;
+  image_url: string;
+
+  @Prop()
+  cloudinary_id: string;
 
   @Prop()
   body: string;
