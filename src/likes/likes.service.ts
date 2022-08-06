@@ -16,41 +16,40 @@ export class LikesService {
     @InjectModel('like') private readonly likeModel: Model<LikeDocument>,
     @InjectModel('post') private readonly postModel: Model<PostDocument>,
     @InjectModel('user') private readonly userModel: Model<UserDocument>,
-  ){}
+  ) {}
 
   async createLike(createLikeDto: CreateLikeDto) {
     const { id } = this.req.user as UserDocument;
-    const{post_id} = createLikeDto;
+    const { post_id } = createLikeDto;
 
-   
     const find = await this.likeModel.findOne({
-       post_id: post_id,
-       user_id: id,
-    })
-    console.log(find)
-    console.log(this.req.user)
-    if(find=== null){
+      post_id: post_id,
+      user_id: id,
+    });
+    console.log(find);
+    console.log(this.req.user);
+    if (find === null) {
       const like = new this.likeModel({
         user_id: id,
-        post_id
-      })
-        await like.save();
+        post_id,
+      });
+      await like.save();
       return 'Like added';
     } else {
-      return "likedAlready"
+      return 'likedAlready';
     }
   }
 
   async deleteLike(id: string) {
-     return await this.likeModel.findByIdAndDelete(id)
+    return await this.likeModel.findByIdAndDelete(id);
   }
 
   async getPostLikes(id: string) {
     const likedPost = this.likeModel.find({
       post_id: id,
     });
-     const likes = likedPost.count();
-    return likedPost
+    const likes = likedPost.count();
+    return likedPost;
   }
 
   // findAll() {

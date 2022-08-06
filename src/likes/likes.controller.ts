@@ -1,10 +1,19 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+} from '@nestjs/common';
 import { LikesService } from './likes.service';
 import { CreateLikeDto } from './dto/create-like.dto';
 import { UpdateLikeDto } from './dto/update-like.dto';
 import { AuthGuard } from '@nestjs/passport';
 
-@UseGuards(AuthGuard("jwt"))
+@UseGuards(AuthGuard('jwt'))
 @Controller('likes')
 export class LikesController {
   constructor(private readonly likesService: LikesService) {}
@@ -15,13 +24,13 @@ export class LikesController {
   }
 
   @Delete(':id')
-  deleteLike (@Param('id') id: string ){
+  deleteLike(@Param('id') id: string) {
     return this.likesService.deleteLike(id);
   }
 
   @Get(':id')
-  getPostLikes (@Param('id') id: string) {
-    return this.likesService.getPostLikes(id)
+  getPostLikes(@Param('id') id: string) {
+    return this.likesService.getPostLikes(id);
   }
 
   // @Get()

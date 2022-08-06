@@ -1,3 +1,3 @@
 export class Payload {
-    email: string;
+  email: string;
 }

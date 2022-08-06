@@ -10,14 +10,13 @@ import { UserSchema } from 'src/users/models/user.model';
 @Module({
   imports: [
     MongooseModule.forFeature([
-      {name: 'like', schema:LikeSchema},
-      {name: 'post', schema:PostSchema},
-      {name: 'user', schema:UserSchema}
+      { name: 'like', schema: LikeSchema },
+      { name: 'post', schema: PostSchema },
+      { name: 'user', schema: UserSchema },
     ]),
     UsersModule,
-
   ],
   controllers: [LikesController],
-  providers: [LikesService]
+  providers: [LikesService],
 })
 export class LikesModule {}

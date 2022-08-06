@@ -7,6 +7,6 @@ import { JwtStrategy } from './jwt.strategy';
 @Module({
   imports: [UsersModule],
   providers: [AuthService, JwtStrategy],
-  controllers: [AuthController]
+  controllers: [AuthController],
 })
 export class AuthModule {}

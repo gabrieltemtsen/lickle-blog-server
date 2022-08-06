@@ -1,4 +1,10 @@
-import { BadRequestException, Inject, Injectable, NotFoundException } from '@nestjs/common';
+/* eslint-disable @typescript-eslint/no-unused-vars */
+import {
+  BadRequestException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
 import { InjectModel } from '@nestjs/mongoose';
@@ -8,10 +14,6 @@ import { UsersService } from 'src/users/users.service';
 import { CreatePostDto } from './dto/create-post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
 import { PostDocument } from './models/post.model';
-import { ConfigService } from '@nestjs/config';
-const Cloudinary = require('cloudinary').v2
-
-
 
 @Injectable()
 export class PostsService {
@@ -20,17 +22,16 @@ export class PostsService {
     @InjectModel('post') private readonly postModel: Model<PostDocument>,
     @InjectModel('user') private readonly userModel: Model<UserDocument>,
     private usersService: UsersService,
-    private configService: ConfigService,
-    
-  ){ }
+  ) {}
 
   async findUserById(id: any) {
-    return await this.usersService.findById(id)
+    return await this.usersService.findById(id);
   }
 
   async createPost(createPostDto: CreatePostDto) {
     const { id } = this.req.user as UserDocument;
-    const {title, description, image_url, cloudinary_id, body, user_id} = createPostDto;
+    const { title, description, image_url, cloudinary_id, body, user_id } =
+      createPostDto;
     const post = new this.postModel({
       user_id: id,
       title,
@@ -39,7 +40,6 @@ export class PostsService {
       body,
       cloudinary_id,
     });
-    
 
     await post.save();
     return 'Post Created';

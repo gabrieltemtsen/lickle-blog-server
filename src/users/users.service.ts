@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
@@ -12,66 +13,65 @@ import { Payload } from 'src/auth/payload';
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectModel('user') private readonly userModel: Model<UserDocument>
-  ){}
+    @InjectModel('user') private readonly userModel: Model<UserDocument>,
+  ) {}
 
   async findById(id: any) {
-    const user = this.userModel.findOne({id})
-    return user
+    const user = this.userModel.findOne({ id });
+    return user;
   }
- 
+
   //register a user
   // async findUser(email: string) {
-    
+
   //   return this.userModel.findOne({email: email})
   // }
 
   async registerUser(createUserDto: CreateUserDto) {
-
-    try{
-      const alreadyExist = await this.userModel.findOne({email: createUserDto.email})
-      if(alreadyExist) {
-        throw new UnauthorizedException("Account Exists please Login")
-      }else{
-        const {name, email , password} = createUserDto;
+    try {
+      const alreadyExist = await this.userModel.findOne({
+        email: createUserDto.email,
+      });
+      if (alreadyExist) {
+        throw new UnauthorizedException('Account Exists please Login');
+      } else {
+        const { name, email, password } = createUserDto;
         const newUser = new this.userModel(createUserDto);
         const saltRounds = 10;
         newUser.name = name;
         newUser.email = email;
-        newUser.password = await bcrypt.hash(createUserDto.password, saltRounds);
-        newUser.role = userRole.reader
-        await newUser.save(); 
-               
+        newUser.password = await bcrypt.hash(
+          createUserDto.password,
+          saltRounds,
+        );
+        newUser.role = userRole.reader;
+        await newUser.save();
+      }
+    } catch (err) {
+      return err;
+      console.log(err);
+    }
   }
-      } catch(err){
-        return err
-        console.log(err)
-      }
-    } 
 
-    async loginUser(login: LoginUserDto) {
-      const {email, password} = login
-      const user = await this.userModel.findOne({email})
-      if(!user){
-        throw new UnauthorizedException('users doesnt exist')
-      }
-      const isMatch = bcrypt.compareSync(password, user.password);
-      if(!isMatch) {
-        throw new UnauthorizedException("Email or password incorrect")
-      }
-      
-      return user
-      
+  async loginUser(login: LoginUserDto) {
+    const { email, password } = login;
+    const user = await this.userModel.findOne({ email });
+    if (!user) {
+      throw new UnauthorizedException('users doesnt exist');
     }
-    async findByPayload(payload: Payload) {
-      const { email } = payload;
-      return await this.userModel.findOne({ email });
+    const isMatch = bcrypt.compareSync(password, user.password);
+    if (!isMatch) {
+      throw new UnauthorizedException('Email or password incorrect');
     }
-    
-    
-    async getUsers() {
-      return await this.userModel.find({})
-    }
-    
- 
+
+    return user;
+  }
+  async findByPayload(payload: Payload) {
+    const { email } = payload;
+    return await this.userModel.findOne({ email });
+  }
+
+  async getUsers() {
+    return await this.userModel.find({});
+  }
 }

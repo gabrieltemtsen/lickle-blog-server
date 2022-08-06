@@ -9,26 +9,23 @@ import { UpdateCommentDto } from './dto/update-comment.dto';
 import { CommentDocument } from './models/comment.model';
 import { UserDocument } from 'src/users/models/user.model';
 
-
 @Injectable()
-
 export class CommentsService {
   constructor(
     @Inject(REQUEST) private req: Request,
-    @InjectModel('comment') private readonly commentModel: Model<CommentDocument>,
+    @InjectModel('comment')
+    private readonly commentModel: Model<CommentDocument>,
     @InjectModel('post') private readonly postModel: Model<PostDocument>,
     @InjectModel('user') private readonly userModel: Model<UserDocument>,
-  ){}
+  ) {}
   async create(createCommentDto: CreateCommentDto) {
-    
     const { id } = this.req.user as UserDocument;
-    
-    const {post_id, comment} = createCommentDto;
 
+    const { post_id, comment } = createCommentDto;
 
     const newComment = new this.commentModel({
       user_id: id,
-      post_id, 
+      post_id,
       comment,
     });
     const res = await newComment.save();
@@ -47,12 +44,11 @@ export class CommentsService {
   }
 
   editComment(id: string, updateCommentDto: UpdateCommentDto) {
-    const {comment} = updateCommentDto;
+    const { comment } = updateCommentDto;
     return this.commentModel.findByIdAndUpdate(id, updateCommentDto);
   }
 
   deleteComment(id: string) {
     return this.commentModel.findByIdAndDelete(id);
-    
   }
 }

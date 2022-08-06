@@ -7,40 +7,29 @@ import { LoginUserDto } from './login-user.dto';
 
 @Controller('auth')
 export class AuthController {
-    constructor(
-        private usersService: UsersService,
-        private authService: AuthService,
-        
-      ) {}
+  constructor(
+    private usersService: UsersService,
+    private authService: AuthService,
+  ) {}
 
-
- @Get("/onlyauth")
- @UseGuards(AuthGuard("jwt"))
- 
-  async hiddenInformation(){
-    return  "hidden information";
+  @Get('/onlyauth')
+  @UseGuards(AuthGuard('jwt'))
+  async hiddenInformation() {
+    return 'hidden information';
   }
 
+  @Get('/anyone')
+  async publicInformation() {
+    return 'this can be seen by anyone';
+  }
 
-  
-  
-@Get("/anyone")
-
-async publicInformation(){
-return  "this can be seen by anyone";
-}
-
-
-    @Post('login')
-    async login(@Body() loginDTO: LoginUserDto) {
-      const user = await this.usersService.loginUser(loginDTO);
-      const payload = {
-        email: user.email,
-      };
-      const token = await this.authService.signPayload(payload);
-      return { user, token};
-    }
-
-
-    
+  @Post('login')
+  async login(@Body() loginDTO: LoginUserDto) {
+    const user = await this.usersService.loginUser(loginDTO);
+    const payload = {
+      email: user.email,
+    };
+    const token = await this.authService.signPayload(payload);
+    return { user, token };
+  }
 }

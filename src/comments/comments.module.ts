@@ -9,18 +9,15 @@ import { UserSchema } from 'src/users/models/user.model';
 
 @Module({
   imports: [
-    
     MongooseModule.forFeature([
-      {name: 'comment', schema:CommentSchema},
-      {name: 'post', schema:PostSchema},
-      {name: 'user', schema:UserSchema}
+      { name: 'comment', schema: CommentSchema },
+      { name: 'post', schema: PostSchema },
+      { name: 'user', schema: UserSchema },
     ]),
     UsersModule,
-    
-
   ],
   controllers: [CommentsController],
   providers: [CommentsService],
-  exports: [CommentsService]
+  exports: [CommentsService],
 })
 export class CommentsModule {}
