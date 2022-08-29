@@ -1,6 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { Document } from 'mongoose';
 import { Like } from 'src/likes/models/like.model';
+import { postCategory } from '../post-category-enum';
 
 export type PostDocument = Post & Document;
 
@@ -11,6 +12,8 @@ export class Post {
 
   @Prop()
   title: string;
+  @Prop()
+  category: postCategory;
 
   @Prop()
   description: string;

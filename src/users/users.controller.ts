@@ -1,24 +1,29 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { LoginUserDto } from '../auth/login-user.dto';
 import { AuthService } from 'src/auth/auth.service';
 
-@Controller()
+@Controller('users')
 export class UsersController {
-    constructor(
-        private usersService: UsersService,
-        private authService: AuthService,
-        
-      ) {}
+  constructor(
+    private usersService: UsersService,
+    private authService: AuthService,
+  ) {}
 
   @Post('/register')
   async registerUser(@Body() createUserDto: CreateUserDto) {
-  
     const user = await this.usersService.registerUser(createUserDto);
-    return "Successfully Registered!"
-    
+    return 'Successfully Registered!';
   }
   // @Post('login')
   // async loginUser(@Body() loginUserdto: LoginUserDto){
@@ -31,7 +36,7 @@ export class UsersController {
   //     return { user, token};
   // }
 
-  @Get()
+  @Get('user')
   findAll() {
     return this.usersService.getUsers();
   }

@@ -13,11 +13,10 @@ import { CommentsService } from './comments.service';
 import { CreateCommentDto } from './dto/create-comment.dto';
 import { UpdateCommentDto } from './dto/update-comment.dto';
 
-@UseGuards(AuthGuard('jwt'))
 @Controller('comments')
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
-
+  @UseGuards(AuthGuard('jwt'))
   @Post()
   create(@Body() createCommentDto: CreateCommentDto) {
     return this.commentsService.create(createCommentDto);
@@ -31,6 +30,15 @@ export class CommentsController {
   @Get(':id') //get comment of a post
   getComments(@Param('id') id: string) {
     return this.commentsService.getComments(id);
+  }
+  @Get('author/:id') //get comment of a post
+  getCommentAuthor(@Param('id') id: string) {
+    return this.commentsService.findUserById(id);
+  }
+
+  @Get('comment/:id') //get comment of a post
+  getNumberOfComments(@Param('id') id: string) {
+    return this.commentsService.getNumberOfComments(id);
   }
 
   @Patch(':id')

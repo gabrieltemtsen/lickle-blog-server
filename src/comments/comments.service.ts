@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Inject, Injectable } from '@nestjs/common';
 import { REQUEST } from '@nestjs/core';
 import { Request } from 'express';
@@ -36,11 +37,25 @@ export class CommentsService {
   findAll() {
     return `This action returns all comments`;
   }
+  async findUserById(id: any) {
+    const getAuthor = await this.userModel.findById(id);
+    const author = getAuthor.name;
+    return author;
+  }
 
   async getComments(id: string) {
-    return await this.commentModel.find({
+    const comments = await this.commentModel.find({
       post_id: id,
     });
+    // const totalComments = await comments.count();
+    return { comments };
+  }
+  async getNumberOfComments(id: string) {
+    const comments = this.commentModel.find({
+      post_id: id,
+    });
+    comments.count();
+    return comments;
   }
 
   editComment(id: string, updateCommentDto: UpdateCommentDto) {
