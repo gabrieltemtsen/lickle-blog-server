@@ -46,6 +46,12 @@ export class PostsController {
     }
     const query = this.postsService.getPosts(options);
 
+    // if (req.query.sort) {
+    //   query.sort({
+    //     date: req.query.sort,
+    //   });
+    // }
+
     const page: number = parseInt(req.query.page as any) || 1;
     const limit = 9;
     const total = await this.postsService.count(options);

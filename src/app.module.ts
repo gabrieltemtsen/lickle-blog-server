@@ -8,19 +8,23 @@ import { LikesModule } from './likes/likes.module';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import { UtilityModule } from './utility/utility.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
-    MongooseModule.forRoot(
-      'mongodb://localhost/lickle-blog'
-    ),
+    MongooseModule.forRoot('mongodb://localhost/lickle-blog'),
     ConfigModule.forRoot({
       envFilePath: '.development.env',
-      isGlobal: true
+      isGlobal: true,
     }),
-    UsersModule, 
-    PostsModule, 
-    PaymentsModule, CommentsModule, LikesModule, AuthModule, UtilityModule],
-  
+    UsersModule,
+    PostsModule,
+    PaymentsModule,
+    CommentsModule,
+    LikesModule,
+    AuthModule,
+    UtilityModule,
+    MailModule,
+  ],
 })
 export class AppModule {}

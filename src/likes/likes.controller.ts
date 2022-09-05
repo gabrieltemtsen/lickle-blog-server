@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Controller,
   Get,
@@ -13,16 +14,15 @@ import { CreateLikeDto } from './dto/create-like.dto';
 import { UpdateLikeDto } from './dto/update-like.dto';
 import { AuthGuard } from '@nestjs/passport';
 
-@UseGuards(AuthGuard('jwt'))
 @Controller('likes')
 export class LikesController {
   constructor(private readonly likesService: LikesService) {}
-
+  @UseGuards(AuthGuard('jwt'))
   @Post()
   create(@Body() createLikeDto: CreateLikeDto) {
     return this.likesService.createLike(createLikeDto);
   }
-
+  @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
   deleteLike(@Param('id') id: string) {
     return this.likesService.deleteLike(id);

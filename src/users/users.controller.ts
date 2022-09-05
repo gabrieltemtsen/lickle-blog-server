@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import {
   Controller,
   Get,
@@ -12,6 +13,9 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { LoginUserDto } from '../auth/login-user.dto';
 import { AuthService } from 'src/auth/auth.service';
+import { Payload } from 'src/auth/payload';
+import { VerifyOtpDto } from './dto/verify-otp.dto';
+import { Email } from './dto/verify-otp.dto';
 
 @Controller('users')
 export class UsersController {
@@ -23,7 +27,6 @@ export class UsersController {
   @Post('/register')
   async registerUser(@Body() createUserDto: CreateUserDto) {
     const user = await this.usersService.registerUser(createUserDto);
-    return 'Successfully Registered!';
   }
   // @Post('login')
   // async loginUser(@Body() loginUserdto: LoginUserDto){
@@ -44,6 +47,18 @@ export class UsersController {
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.usersService.findById(id);
+  }
+  @Post('/reset')
+  resetUserPassword(@Body() email: Email) {
+    return this.usersService.resetPassword(email);
+  }
+  @Post('/reset/verify')
+  verifyResetPassword(@Body() verifyOtpDto: VerifyOtpDto) {
+    return this.usersService.verifyOtp(verifyOtpDto);
+  }
+  @Post('/reset/update')
+  updateUserPassword(@Body() updateUserDto: UpdateUserDto) {
+    return this.usersService.updatePassword(updateUserDto);
   }
 
   // @Patch(':id')
